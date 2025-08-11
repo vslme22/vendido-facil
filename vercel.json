@@ -5,20 +5,16 @@
       "dest": "/baianadoacaraje.html"
     },
     {
-      "src": "/mercado-bom-preco",
-      "dest": "/mercado-bom-preco.html"
-    },
-    {
-      "src": "/deposito-bebidas",
-      "dest": "/deposito-bebidas.html"
-    },
-    {
       "src": "/criar",
       "dest": "/criar-loja.html"
     },
     {
       "src": "/rastreamento",
       "dest": "/rastreamento.html"
+    },
+    {
+      "src": "/loja",
+      "dest": "/loja.html"
     },
     {
       "src": "/(.*)",
