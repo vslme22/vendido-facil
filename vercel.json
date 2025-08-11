@@ -1,9 +1,28 @@
 {
   "routes": [
-    { "source": "/baianadoacaraje", "destination": "/baianadoacaraje.html" },
-    { "source": "/mercado-bom-preco", "destination": "/mercado-bom-preco.html" },
-    { "source": "/depoisito-bebidas", "destination": "/depoisito-bebidas.html" },
-    { "source": "/criar", "destination": "/criar-loja.html" },
-    { "source": "/rastreamento", "destination": "/rastreamento.html" }
+    {
+      "src": "/baianadoacaraje",
+      "dest": "/baianadoacaraje.html"
+    },
+    {
+      "src": "/mercado-bom-preco",
+      "dest": "/mercado-bom-preco.html"
+    },
+    {
+      "src": "/deposito-bebidas",
+      "dest": "/deposito-bebidas.html"
+    },
+    {
+      "src": "/criar",
+      "dest": "/criar-loja.html"
+    },
+    {
+      "src": "/rastreamento",
+      "dest": "/rastreamento.html"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
   ]
 }
