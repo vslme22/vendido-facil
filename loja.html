@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title id="titulo">Vendido! Fácil</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="manifest.json">
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: Arial; text-align: center; padding: 20px; background: #f8f9fa; }
+    .header { background: #e67e22; color: white; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
+    .produto { 
+      display: flex; justify-content: space-between; 
+      padding: 15px; background: white; 
+      margin: 10px 0; border-radius: 8px; 
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+    }
+    button { 
+      background: #e67e22; color: white; border: none; 
+      padding: 12px; width: 100%; border-radius: 8px; 
+      font-size: 18px; margin: 10px 0; 
+    }
+    .footer { margin-top: 40px; color: #888; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1 id="nome-loja">Minha Loja</h1>
+    <p id="dono-loja">Por: Dono</p>
+  </div>
+
+  <div id="cardapio"></div>
+
+  <button onclick="window.location='rastreamento.html'">📍 Acompanhar Entrega</button>
+  <p class="footer">Vendido! Fácil — Delivery dos pequenos.</p>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const nome = urlParams.get('nome') || 'Minha Loja';
+    const dono = urlParams.get('dono') || 'Dono';
+    const slug = urlParams.get('slug') || nome.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+    document.getElementById('nome-loja').textContent = nome;
+    document.getElementById('dono-loja').textContent = 'Por: ' + dono;
+    document.title = nome + ' - Peça agora!';
+
+    const loja = JSON.parse(localStorage.getItem('vendido_loja_' + slug));
+    const produtos = loja?.produtos || [{ nome: 'Produto 1', preco: 'R$ 20,00' }];
+
+    const cardapio = document.getElementById('cardapio');
+    produtos.forEach(p => {
+      const div = document.createElement('div');
+      div.className = 'produto';
+      div.innerHTML = `
+        <span>${p.nome}</span>
+        <span>${p.preco}</span>
+        <button onclick="pedir('${p.nome}', '${p.preco}')">Pedir</button>
+      `;
+      cardapio.appendChild(div);
+    });
+
+    function fala(texto) {
+      if ('speechSynthesis' in window) {
+        const msg = new SpeechSynthesisUtterance(texto);
+        msg.lang = 'pt-BR';
+        msg.rate = 0.9;
+        const voices = window.speechSynthesis.getVoices();
+        if (voices.length > 0) {
+          msg.voice = voices.find(v => v.name.includes('Google português')) || voices[0];
+        }
+        window.speechSynthesis.speak(msg);
+      }
+    }
+
+    function pedir(produto, preco) {
+      const nomeCliente = prompt('Seu nome:') || 'Cliente';
+      const endereco = prompt('Seu endereço:') || 'Não informado';
+      
+      const id = Date.now();
+      const pedido = { id, nome, dono, produto, preco, nomeCliente, endereco, status: 'novo' };
+      localStorage.setItem('pedido_' + id, JSON.stringify(pedido));
+
+      fala(`Novo pedido! ${produto}, valor ${preco}, cliente ${nomeCliente}.`);
+
+      const linkRastreamento = `rastreamento.html?id=${id}`;
+      const mensagem = encodeURIComponent(
+        `✅ Seu pedido foi confirmado!\n\n📦 Produto: ${produto}\n💰 Valor: ${preco}\n🏠 Entrega: ${endereco}\n\n📍 ACOMPANHE SUA ENTREGA:\n${linkRastreamento}`
+      );
+      const linkWhatsApp = `https://wa.me/?text=${mensagem}`;
+
+      const acao = confirm('✅ Pedido feito!\n\nClique em OK para receber o link no WhatsApp ou em CANCELAR para copiar o link.');
+      if (acao) {
+        window.open(linkWhatsApp, '_blank');
+      } else {
+        navigator.clipboard.writeText(linkRastreamento);
+        alert(`Link copiado: ${linkRastreamento}`);
+      }
+
+      window.location = linkRastreamento;
+    }
+
+    window.speechSynthesis.getVoices();
+  </script>
+</body>
+</html>

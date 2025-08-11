@@ -1,0 +1,9 @@
+{
+  "routes": [
+    { "source": "/baianadoacaraje", "destination": "/baianadoacaraje.html" },
+    { "source": "/mercado-bom-preco", "destination": "/mercado-bom-preco.html" },
+    { "source": "/depoisito-bebidas", "destination": "/depoisito-bebidas.html" },
+    { "source": "/criar", "destination": "/criar-loja.html" },
+    { "source": "/rastreamento", "destination": "/rastreamento.html" }
+  ]
+}

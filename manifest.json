@@ -1,0 +1,20 @@
+{
+  "short_name": "Vendido!",
+  "name": "Vendido! - Delivery dos Pequenos",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#f58a2f",
+  "theme_color": "#f58a2f",
+  "icons": [
+    {
+      "src": "https://via.placeholder.com/192/f58a2f/ffffff?text=V",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://via.placeholder.com/512/f58a2f/ffffff?text=V",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
